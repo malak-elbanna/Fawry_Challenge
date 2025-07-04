@@ -7,40 +7,52 @@ interface Shippable {
 
 class Product {
     - name: String
-    - price: double
+    - price: float
     - quantity: int
-    - expiryDate: LocalDate
+    - expiryDate: Optional<LocalDate>
     - weight: double
     - isShippable: boolean
     + isExpired(): boolean
-    + isShippingRequired(): boolean
+    + isOutOfStock(): boolean
+    + decreaseQuantity(): void
+    + getName(): String
+    + getWeight(): double
+    + isShippable(): boolean
+}
+
+class ShippableItem {
+    - name: String
+    - weight: double
     + getName(): String
     + getWeight(): double
 }
 
-Product .up.|> Shippable
+ShippableItem .up.|> Shippable
 
 class Customer {
     - balance: double
     + deductBalance(amount: double): void
+    + addBalance(amount: double): void
     + getBalance(): double
 }
 
 class Cart {
     - items: Map<Product, Integer>
-    + addProduct(product: Product, quantity: int): void
+    + addProduct(product: Product): void
+    + removeProduct(product: Product): void
     + getSubtotal(): double
     + getShippableItems(): List<Shippable>
+    + removeExpiredOrOutOfStockItems(): void
+    + clear(): void
     + isEmpty(): boolean
-    + isExpiredOrOutOfStockItems(): boolean
 }
 
 class CheckoutService {
     + checkout(customer: Customer, cart: Cart): void
-    - calculateShippingFees(items: List<Shippable>): double
 }
 
 class ShippingService {
+    - costPerGram: double
     + shipItems(items: List<Shippable>): void
     + calculateCost(items: List<Shippable>): double
 }
@@ -49,5 +61,6 @@ CheckoutService "1" --> "1" Customer : uses
 CheckoutService "1" --> "1" Cart : uses
 CheckoutService "1" --> "1" ShippingService : uses
 Cart "1" o-- "*" Product : contains
+Cart "1" ..> "1..*" ShippableItem : creates
 
 @enduml
