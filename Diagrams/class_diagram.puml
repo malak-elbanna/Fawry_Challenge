@@ -1,0 +1,66 @@
+@startuml
+
+interface Shippable {
+    +getName() : String
+    +getWeight() : double
+}
+
+class Product {
+    - name: String
+    - price: float
+    - quantity: int
+    - expiryDate: Optional<LocalDate>
+    - weight: double
+    - isShippable: boolean
+    + isExpired(): boolean
+    + isOutOfStock(): boolean
+    + decreaseQuantity(): void
+    + getName(): String
+    + getWeight(): double
+    + isShippable(): boolean
+}
+
+class ShippableItem {
+    - name: String
+    - weight: double
+    + getName(): String
+    + getWeight(): double
+}
+
+ShippableItem .up.|> Shippable
+
+class Customer {
+    - balance: double
+    + deductBalance(amount: double): void
+    + addBalance(amount: double): void
+    + getBalance(): double
+}
+
+class Cart {
+    - items: Map<Product, Integer>
+    + addProduct(product: Product): void
+    + removeProduct(product: Product): void
+    + getSubtotal(): double
+    + getShippableItems(): List<Shippable>
+    + removeExpiredOrOutOfStockItems(): void
+    + clear(): void
+    + isEmpty(): boolean
+}
+
+class CheckoutService {
+    + checkout(customer: Customer, cart: Cart): void
+}
+
+class ShippingService {
+    - costPerGram: double
+    + shipItems(items: List<Shippable>): void
+    + calculateCost(items: List<Shippable>): double
+}
+
+CheckoutService "1" --> "1" Customer : uses
+CheckoutService "1" --> "1" Cart : uses
+CheckoutService "1" --> "1" ShippingService : uses
+Cart "1" o-- "*" Product : contains
+Cart "1" ..> "1..*" ShippableItem : creates
+
+@enduml
