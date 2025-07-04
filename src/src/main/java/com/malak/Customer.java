@@ -1,21 +1,21 @@
 package com.malak;
 
 public class Customer {
-    private float balance;
+    private double balance;
 
-    public Customer() {
-        balance = 0.0f;
-    }
-
-    public float getBalance() {
-        return balance;
-    }
-
-    public void setBalance(float balance) {
+    public Customer(double balance) {
         this.balance = balance;
     }
 
-    public void deductBalance(float amount) {
+    public double getBalance() {
+        return balance;
+    }
+
+    public void addBalance(double amount) {
+        this.balance += amount;
+    }
+
+    public void deductBalance(double amount) {
         balance -= amount;
     }
 }
