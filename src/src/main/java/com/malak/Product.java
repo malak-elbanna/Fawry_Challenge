@@ -8,10 +8,10 @@ public class Product {
     private float price;
     private int quantity;
     private Optional<LocalDate> expiryDate;
-    private float weight;
+    private double weight;
     private boolean isShippable;
 
-    public Product(String name, float price, int quantity, LocalDate expiryDate, float weight, boolean isShippable) {
+    public Product(String name, float price, int quantity, LocalDate expiryDate, double weight, boolean isShippable) {
         this.name = name;
         this.price = price;
         this.quantity = quantity;
@@ -20,17 +20,17 @@ public class Product {
         this.isShippable = isShippable;
     }
 
-    public Product(String name, float price, int quantity, boolean isShippable) {
+    public Product(String name, float price, int quantity, double weight, boolean isShippable) {
         this.name = name;
         this.price = price;
         this.quantity = quantity;
         this.expiryDate = Optional.empty();
-        this.weight = 0;
+        this.weight = weight;
         this.isShippable = isShippable;
     }
 
     public boolean isExpired() {
-        return expiryDate.isPresent() && expiryDate.get().isAfter(LocalDate.now());
+        return expiryDate.isPresent() && expiryDate.get().isBefore(LocalDate.now());
     }
 
     public boolean isOutOfStock() {
@@ -49,11 +49,15 @@ public class Product {
         return quantity;
     }
 
+    public void decreaseQuantity() {
+        quantity--;
+    }
+
     public Optional<LocalDate> getExpiryDate() {
         return expiryDate;
     }
 
-    public float getWeight() {
+    public double getWeight() {
         return weight;
     }
 
