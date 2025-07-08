@@ -46,12 +46,21 @@ public class BookInventory {
             return 0;
         }
 
-        System.out.println("Successfull! You ordered this book successfully");
+        System.out.println("You ordered this book successfully!");
         System.out.println("Processing details ....");
         System.out.println("Book Title: " + book.getTitle());
         System.out.println("Book ISBN: " + book.getIsbn());
         System.out.println("Book Author: " + book.getAuthor());
         System.out.println("Book Price: " + book.getPrice());
+
+        double priceAfterSale = 0;
+        if (book.isForSale()) {
+            System.out.println("\nCongratss book is for sale ");
+            priceAfterSale = book.getPrice() - 50;
+        } else {
+            System.out.println("\nSorry this book isn't for sale ");
+            return 0;
+        }
 
         if (book.getDeliveryType() == DeliveryType.EMAILABLE) {
             EmailableInfo item = new EmailableInfo(book);
@@ -61,7 +70,6 @@ public class BookInventory {
             shippingService.ship(item, address);
         }
 
-        double priceAfterSale = book.isForSale() ? book.getPrice() - 50 : book.getPrice();
         return priceAfterSale * quantity;
     }
 }

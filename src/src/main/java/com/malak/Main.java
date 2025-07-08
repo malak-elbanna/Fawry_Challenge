@@ -16,8 +16,11 @@ public class Main {
         bookInventory.addBook(book3);
 
         double totalPrice = bookInventory.buyBook("isbn2", 5, "test@test.com", "test");
-        System.out.println("-----------");
-        System.out.println("Thank you for paying "+ totalPrice);
+
+        if (totalPrice != 0) {
+            System.out.println("-----------");
+            System.out.println("Thank you for paying "+ totalPrice);
+        }
 
         System.out.println("-----------");
         System.out.println("Removing outdated books ...");
