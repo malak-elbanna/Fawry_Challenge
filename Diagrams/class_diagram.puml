@@ -1,66 +1,79 @@
 @startuml
 
 interface Shippable {
-    +getName() : String
-    +getWeight() : double
+    + getTitle(): String
+    + getAuthor(): String
 }
 
-class Product {
-    - name: String
-    - price: float
+interface Emailable {
+    + getTitle(): String
+    + getFileType(): String
+}
+
+class ShippableInfo implements Shippable {
+    - title: String
+    - author: String
+    + ShippableInfo(book: Book)
+    + getTitle(): String
+    + getAuthor(): String
+}
+
+class EmailableInfo implements Emailable {
+    - title: String
+    - fileType: String
+    + EmailableInfo(book: Book)
+    + getTitle(): String
+    + getFileType(): String
+}
+
+enum DeliveryType {
+    SHIPPABLE
+    EMAILABLE
+    NONE
+}
+
+class Book {
+    - isbn: String
+    - title: String
+    - author: String
+    - year: int
+    - price: double
     - quantity: int
-    - expiryDate: Optional<LocalDate>
-    - weight: double
-    - isShippable: boolean
-    + isExpired(): boolean
-    + isOutOfStock(): boolean
-    + decreaseQuantity(): void
-    + getName(): String
-    + getWeight(): double
-    + isShippable(): boolean
-}
-
-class ShippableItem {
-    - name: String
-    - weight: double
-    + getName(): String
-    + getWeight(): double
-}
-
-ShippableItem .up.|> Shippable
-
-class Customer {
-    - balance: double
-    + deductBalance(amount: double): void
-    + addBalance(amount: double): void
-    + getBalance(): double
-}
-
-class Cart {
-    - items: Map<Product, Integer>
-    + addProduct(product: Product): void
-    + removeProduct(product: Product): void
-    + getSubtotal(): double
-    + getShippableItems(): List<Shippable>
-    + removeExpiredOrOutOfStockItems(): void
-    + clear(): void
-    + isEmpty(): boolean
-}
-
-class CheckoutService {
-    + checkout(customer: Customer, cart: Cart): void
+    - fileType: String ' Nullable
+    - deliveryType: DeliveryType
+    + isForSale(): boolean
+    + isOutdated(currentYear: int, threshold: int): boolean
+    + decreaseQuantity(amount: int): void
+    + getDeliveryType(): DeliveryType
 }
 
 class ShippingService {
-    - costPerGram: double
-    + shipItems(items: List<Shippable>): void
-    + calculateCost(items: List<Shippable>): double
+    + ship(item: Shippable, address: String): void
 }
 
-CheckoutService "1" --> "1" Customer : uses
-CheckoutService "1" --> "1" Cart : uses
-CheckoutService "1" --> "1" ShippingService : uses
-Cart "1" o-- "*" Product : contains
-Cart "1" ..> "1..*" ShippableItem : creates
+class MailService {
+    + send(item: Emailable, email: String): void
+}
+
+class BookInventory {
+    - books: Map<String, Book>
+    - shippingService: ShippingService
+    - mailService: MailService
+    + addBook(book: Book): void
+    + removeOutdatedBooks(currentYear: int, threshold: int): List<Book>
+    + buyBook(isbn: String, quantity: int, email: String, address: String): double
+}
+
+Book o--> "1" DeliveryType
+
+BookInventory "1" o--> "*" Book : contains
+BookInventory "1" --> "1" ShippingService : uses
+BookInventory "1" --> "1" MailService : uses
+
+BookInventory ..> ShippableInfo : creates
+BookInventory ..> EmailableInfo : creates
+
+ShippingService ..> Shippable
+MailService ..> Emailable
 
 @enduml
