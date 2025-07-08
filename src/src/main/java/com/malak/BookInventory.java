@@ -39,13 +39,14 @@ public class BookInventory {
             return 0;
         }
 
-        if (book.getQuantity() < quantity) {
-            System.out.println("We don't have enough amount!");
+        try {
+            book.decreaseQuantity(quantity);
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
             return 0;
         }
 
-        book.decreaseQuantity(quantity);
-        System.out.println("Successfull! You paid this book successfully");
+        System.out.println("Successfull! You ordered this book successfully");
         System.out.println("Processing details ....");
 
         if (book.getDeliveryType() == DeliveryType.EMAILABLE) {
@@ -56,6 +57,7 @@ public class BookInventory {
             shippingService.ship(item, address);
         }
 
-        return book.getPrice() * quantity;
+        double priceAfterSale = book.isForSale() ? book.getPrice() - 50 : book.getPrice();
+        return priceAfterSale * quantity;
     }
 }
