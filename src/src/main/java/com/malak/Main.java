@@ -7,9 +7,9 @@ public class Main {
 
         BookInventory bookInventory = new BookInventory();
 
-        Book book1 = new Book("isbn1", "Book1", "Author1", 2005, 500, 10, "pdf", 2);
-        Book book2 = new Book("isbn2", "Book2", "Author2", 2024, 150, 10, "pdf", 1);
-        Book book3 = new Book("isbn3", "Book3", "Author3", 2012, 650, 10, "pdf", 0);
+        Book book1 = new Book("isbn1", "Book1", "Author1", 2005, 500, 10, "pdf", DeliveryType.NONE);
+        Book book2 = new Book("isbn2", "Book2", "Author2", 2024, 150, 10, "pdf", DeliveryType.EMAILABLE);
+        Book book3 = new Book("isbn3", "Book3", "Author3", 2012, 650, 10, "pdf", DeliveryType.SHIPPABLE);
 
         bookInventory.addBook(book1);
         bookInventory.addBook(book2);

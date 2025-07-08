@@ -10,7 +10,7 @@ public class Book {
     private String fileType;
     private DeliveryType deliveryType;
 
-    public Book(String isbn, String title, String author, int year, double price, int quantity, String fileType, int deliveryType) {
+    public Book(String isbn, String title, String author, int year, double price, int quantity, String fileType, DeliveryType deliveryType) {
         this.isbn = isbn;
         this.title = title;
         this.author = author;
@@ -18,18 +18,7 @@ public class Book {
         this.price = price;
         this.quantity = quantity;
         this.fileType = fileType;
-
-        switch (deliveryType) {
-            case 0:
-                this.deliveryType = DeliveryType.SHIPPABLE;
-                break;
-            case 1:
-                this.deliveryType = DeliveryType.EMAILABLE;
-                break;
-            case 2:
-                this.deliveryType = DeliveryType.NONE;
-                break;
-        }
+        this.deliveryType = deliveryType != null ? deliveryType : DeliveryType.NONE;
     }
 
     public String getIsbn() {
