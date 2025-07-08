@@ -1,39 +1,40 @@
 # Fawry Challenge
-This challenge simulates a simple shopping cart system with shipping and checkout logic.
+This challenge simulates a simple bookstore system with shipping and checkout logic.
 
 ## Features
-- Add/Remove product to cart
-- Remove expired or out-of-stock products automatically before checkout
-- Calculate total price and shipping fees
-- Print detailed checkout receipt
-- Handle exceptions if the cart is empty or the customer's balance is insufficient
+- Add a book to the inventory with some details like ISBN, title, year when the book is published, price
+- Remove and return outdated books that passed specific number of years
+- Buy a single book providing its ISBN, quantity, email, address
 
 ## Class Diagram Overview
 These are the key classes and interfaces:-
-- `Product`: represents items in the store
-- `Cart`: contains and manages the customer's chosen products 
-- `Customer`: tracks customer balance
-- `CheckoutService`: handle checkout exceptions and prints the receipt
-- `ShippingService`: ships items and calculates shipping fees
-- `Shippable`: interface that includes getName() and getWeight()
-- `ShippableItem`: wrapper used for shipping
+- `BookInventory`: responsible for managing, buying books, and creating the shipping and mailing services
+- `Book`: book model class
+- `ShippingService`: responsible for shipping books
+- `MailService`: responsible for mailing books
+- `DeliveryType`: enum that contains different delivery types (SHIPPABLE, EMAILABLE, NONE)
+- `Shippable`: interface that includes getTitle() and getAuthor()
+- `Emailable`: interface that includes getTitle() and getFileType()
+- `ShippableInfo`: wrapper used for shipping
+- `EmailableInfo`: wrapper used for mailing
 
 ![Class Diagram](Diagrams/class_diagram.png)
 
 ## Example Output
 ```
-** Shipment Notice **
-2x Cheese       701.0g
+Successfull! You ordered this book successfully
+Processing details ....
+Book Title: Book2
+Book ISBN: isbn2
+Book Author: Author2
+Book Price: 150.0
 
-Total package weight is 701.0g
-
-** Checkout Receipt
-1x TV   30000.0
-2x Cheese       30.0
-----------------------
-Subtotal        30060.0
-Shipping        175.25
-Amount          30235.25
+Sending Book2 to test@test.com
+-----------
+Thank you for paying 500.0
+-----------
+Removing outdated books ...
+Book1
 ```
 
 ## Run Instructions
