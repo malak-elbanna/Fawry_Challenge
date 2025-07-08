@@ -48,6 +48,10 @@ public class BookInventory {
 
         System.out.println("Successfull! You ordered this book successfully");
         System.out.println("Processing details ....");
+        System.out.println("Book Title: " + book.getTitle());
+        System.out.println("Book ISBN: " + book.getIsbn());
+        System.out.println("Book Author: " + book.getAuthor());
+        System.out.println("Book Price: " + book.getPrice());
 
         if (book.getDeliveryType() == DeliveryType.EMAILABLE) {
             EmailableInfo item = new EmailableInfo(book);

@@ -7,6 +7,6 @@ public class ShippingService {
     public ShippingService() {}
 
     public void ship(Shippable item, String address) {
-        System.out.println("Shipping " + item.getTitle() + " at " + address);
+        System.out.println("\nShipping " + item.getTitle() + " at " + address);
     }
 }
