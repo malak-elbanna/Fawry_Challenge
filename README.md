@@ -22,12 +22,14 @@ These are the key classes and interfaces:-
 
 ## Example Output
 ```
-Successfull! You ordered this book successfully
+You ordered this book successfully!
 Processing details ....
 Book Title: Book2
 Book ISBN: isbn2
 Book Author: Author2
 Book Price: 150.0
+
+Congratss book is for sale 
 
 Sending Book2 to test@test.com
 -----------
